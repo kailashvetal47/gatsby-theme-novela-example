@@ -18,7 +18,7 @@ The new [DOOM](https://en.wikipedia.org/wiki/Doom_(2016_video_game)) is a perfec
 
 We’ll examine the scene below where the player attacks a *[Gore Nest](http://doom.wikia.com/wiki/Gore_nest)* defended by some *[Possessed](http://doom.wikia.com/wiki/The_Possessed_(Enemy))* enemies, right after obtaining the *Praetor Suit* at the beginning of the game.
 
-![DOOM%202016%20Graphics%20Study%20Adrian%20Courr%20ges/99_final.jpg](DOOM%202016%20Graphics%20Study%20Adrian%20Courr%20ges/99_final.jpg)
+![images/99_final.jpg](images/99_final.jpg)
 
 Unlike most Windows games released these days, DOOM doesn’t use [Direct3D](https://en.wikipedia.org/wiki/Direct3D) but offers an [OpenGL](https://en.wikipedia.org/wiki/OpenGL) and [Vulkan](https://en.wikipedia.org/wiki/Vulkan_(API)) backend. Vulkan being the new hot thing and [Baldur Karlsson](https://twitter.com/baldurk) having recently added support for it in [RenderDoc](https://github.com/baldurk/renderdoc), it was hard resisting picking into DOOM internals. The following observations are based on the game running with Vulkan on a [GTX 980](https://en.wikipedia.org/wiki/GeForce_900_series) with all the settings on *Ultra*, some are guesses others are taken from the [Siggraph presentation by Tiago Sousa and Jean Geffroy](http://advances.realtimerendering.com/s2016/Siggraph2016_idTech6.pdf).
 
@@ -26,7 +26,7 @@ Unlike most Windows games released these days, DOOM doesn’t use [Direct3D](htt
 
 First step is the [Mega-Texture](https://en.wikipedia.org/wiki/MegaTexture) update, a technique already present in [id Tech 5](https://en.wikipedia.org/wiki/Id_Tech_5) used in [RAGE](https://en.wikipedia.org/wiki/Rage_(video_game)) and now also used in DOOM. To give a very basic explanation, the idea is that a few huge textures (16k x 8k in DOOM) are allocated on the GPU memory, each of these being a collection of 128x128 tiles.
 
-![DOOM%202016%20Graphics%20Study%20Adrian%20Courr%20ges/05_megatext_illus.jpg](DOOM%202016%20Graphics%20Study%20Adrian%20Courr%20ges/05_megatext_illus.jpg)
+![images/05_megatext_illus.jpg](images/05_megatext_illus.jpg)
 
 All these tiles are supposed to represent the ideal set of actual textures at the good mipmap level which will be needed by the pixel shaders later to render the particular scene you’re looking at. When the pixel shader reads from a “virtual texture” it simply ends up reading from some of these 128x128 physical tiles. Of course depending on where the player is looking at, this set is going to change: new models will appear on screen, referencing other virtual textures, new tiles must be streamed in, old ones streamed out… So at the beginning of a frame, DOOM updates a few tiles through `vkCmdCopyBufferToImage` to bring some actual texture data into the GPU memory.
 
@@ -36,7 +36,7 @@ All these tiles are supposed to represent the ideal set of actual textures at th
 
 For each light casting a shadow, a unique [depth map](https://en.wikipedia.org/wiki/Depth_map) is generated and saved into one tile of a giant 8k x 8k [texture atlas](https://en.wikipedia.org/wiki/Texture_atlas). However not every single depth map is calculated at every frame: DOOM heavily re-uses the result of the previous frame and regenerates only the depth maps which need to be updated.
 
-![DOOM%202016%20Graphics%20Study%20Adrian%20Courr%20ges/10_light_depth__zommed_illu_1.png](DOOM%202016%20Graphics%20Study%20Adrian%20Courr%20ges/10_light_depth__zommed_illu_1.png)
+![images/10_light_depth__zommed_illu_1.png](images/10_light_depth__zommed_illu_1.png)
 
 When a light is static and casts shadows only on static objects it makes sense to simply keep its depth map as-is instead of doing unnecessary re-calculation. If some enemy is moving under the light though, the depth map must be generated again. Depth map sizes can vary depending on the light distance from the camera, also re-generated depth maps don’t necessarily stay inside the same tile within the atlas. DOOM has specific optimizations like caching the static portion of a depth map, computing then only the dynamic meshes projection and compositing the results.
 
@@ -44,17 +44,17 @@ When a light is static and casts shadows only on static objects it makes sense t
 
 All the opaque meshes are now rendered, outputting just their depth information into a depth map. First the player’s weapon, then static geometry and finally dynamic geometry.
 
-![DOOM%202016%20Graphics%20Study%20Adrian%20Courr%20ges/11_depth_map_3.png](DOOM%202016%20Graphics%20Study%20Adrian%20Courr%20ges/11_depth_map_3.png)
+![images/11_depth_map_3.png](images/11_depth_map_3.png)
 
 But actually the depth was not the only information outputted during the depth pre-pass. While dynamic objects (the *Possessed*, cables, the player’s weapon) were rendered to the depth map, their velocity per-pixel was also calculated and written to another buffer to create a velocity map. This is done by computing in the vertex shader the position difference of each vertex between the previous and the current frame.
 
-![DOOM%202016%20Graphics%20Study%20Adrian%20Courr%20ges/12_velocity.png](DOOM%202016%20Graphics%20Study%20Adrian%20Courr%20ges/12_velocity.png)
+![images/12_velocity.png](images/12_velocity.png)
 
 We only need 2 channels to store the velocity: red is the speed along the horizontal axis and green along the vertical axis. The *Possessed* is quickly moving towards the player (green) while the weapon is barely moving (black). What about the yellow area (red and green both equal to 1)? It’s actually the original default color of the buffer, that no dynamic mesh ever touched: it’s all the *“static mesh area”*. Why does DOOM skip the velocity calculation for static meshes? Because a static pixel velocity can simply be inferred from its depth and the player’s camera new state since last frame, no need to calculate it on a per-mesh basis. The velocity map will be useful later to apply some [motion blur](https://en.wikipedia.org/wiki/Motion_blur).
 
 ### Occlusion Queries
 
-![DOOM%202016%20Graphics%20Study%20Adrian%20Courr%20ges/13_occ_quer.png](DOOM%202016%20Graphics%20Study%20Adrian%20Courr%20ges/13_occ_quer.png)
+![images/13_occ_quer.png](images/13_occ_quer.png)
 
 We want to send as little geometry to render to the GPU as possible so the best way to achieve this is to cull all the meshes which are not directly visible by the player. Most of the occlusion culling in DOOM is done through the [Umbra middleware](http://umbra3d.com/knee-deep-in-the-dead/) but there are still some *GPU occlusion queries* performed by the engine to further trim down the visibility set.
 
@@ -64,7 +64,7 @@ So what’s the idea behind GPU occlusion queries? First step is to group severa
 
 All the opaque geometry and the decals are now rendered. The lighting information is stored into a float HDR buffer:
 
-![DOOM%202016%20Graphics%20Study%20Adrian%20Courr%20ges/20_light_3.jpg](DOOM%202016%20Graphics%20Study%20Adrian%20Courr%20ges/20_light_3.jpg)
+![images/20_light_3.jpg](images/20_light_3.jpg)
 
 The depth test function is set to `EQUAL` to avoid any useless overdraw computation, thanks to the previous depth pre-pass we know exactly which depth value each pixel is supposed to have. The decals are also applied directly when meshes are rendered, they’re stored in a texture atlas.
 
@@ -88,7 +88,7 @@ With a clustered renderer, a typical flow would be:
 
 Here is actually how the pixel shader can retrieve the list of lights and decals during this pass:
 
-![DOOM%202016%20Graphics%20Study%20Adrian%20Courr%20ges/21_cluster_3.jpg](DOOM%202016%20Graphics%20Study%20Adrian%20Courr%20ges/21_cluster_3.jpg)
+![images/21_cluster_3.jpg](images/21_cluster_3.jpg)
 
 There’s also the probe list (not shown in the diagram above) which can be accessed in exactly the same fashion, but it’s not used in this pass so we’ll get back to it later. The overhead of pregenerating a list of items per cluster on the CPU is well worth it considering how dramatically it can cut the rendering calculation complexity on the GPU down the line. Clustered-forward rendering is getting some attention recently: it has the nice property of handling more lights than basic forward while being faster than deferred which has to write to / read from several *G-Buffers*.
 
@@ -106,7 +106,7 @@ A [compute shader](https://www.opengl.org/wiki/Compute_Shader) is dispatched to 
 
 ### Screen Space Ambient Occlusion
 
-![DOOM%202016%20Graphics%20Study%20Adrian%20Courr%20ges/24_ssao.png](DOOM%202016%20Graphics%20Study%20Adrian%20Courr%20ges/24_ssao.png)
+![images/24_ssao.png](images/24_ssao.png)
 
 In this step the [SSAO](https://en.wikipedia.org/wiki/Screen_space_ambient_occlusion) map is now generated.
 
@@ -120,7 +120,7 @@ A pixel shader now generates the SSR map. It ray-traces reflections using only i
 
 [Untitled](https://www.notion.so/df8d46bd0fcf4a0d8b67687aa029ee3b)
 
-![DOOM%202016%20Graphics%20Study%20Adrian%20Courr%20ges/25_ssr.jpg](DOOM%202016%20Graphics%20Study%20Adrian%20Courr%20ges/25_ssr.jpg)
+![images/25_ssr.jpg](images/25_ssr.jpg)
 
 The inputs of the shader are the depth map (to calculate pixel world-space position), normal map (to know how to make the rays bounce), specular map (to know the ‘amount’ of reflection) and the ***previous frame*** rendered (at pre-tonemapping stage but post-transparency, to have some color information). The previous frame camera configuration is also provided to the pixel shader so it can keep track of fragment position changes.
 
@@ -132,7 +132,7 @@ After all the dynamic reflections of the previous pass (and their limitations) n
 
 A pixel shader reads from the depth, normal, specular buffers, looks-up in the cluster structure which cubemaps influence the pixel (the closer the cubemap, the stronger its influence) and generates a static reflection map:
 
-![DOOM%202016%20Graphics%20Study%20Adrian%20Courr%20ges/26_env_refl.jpg](DOOM%202016%20Graphics%20Study%20Adrian%20Courr%20ges/26_env_refl.jpg)
+![images/26_env_refl.jpg](images/26_env_refl.jpg)
 
 ### Blending Maps Together
 
@@ -143,7 +143,7 @@ In this step a compute shader combines all the maps which were generated previou
 - when SSR information is missing, the static reflection map data is used as a fallback
 - some fog effect is also computed
 
-![DOOM%202016%20Graphics%20Study%20Adrian%20Courr%20ges/31_combine_pre.jpg](DOOM%202016%20Graphics%20Study%20Adrian%20Courr%20ges/31_combine_pre.jpg)
+![images/31_combine_pre.jpg](images/31_combine_pre.jpg)
 
 ### Particle Lighting
 
@@ -155,7 +155,7 @@ And this is only the *lighting* information which is stored at such low resoluti
 
 The scene is downscaled several times, down to 40 pixels. The smallest downscaled levels are blurred using separated vertical and horizontal passes.
 
-![DOOM%202016%20Graphics%20Study%20Adrian%20Courr%20ges/33_blur_chain.png](DOOM%202016%20Graphics%20Study%20Adrian%20Courr%20ges/33_blur_chain.png)
+![images/33_blur_chain.png](images/33_blur_chain.png)
 
 Why is this blur performed so early? Such process is usually done in the end during post-processing to make a bloom effect from the bright areas. But here all these different blur levels will come in handy in the next pass when rendering glass refraction.
 
@@ -163,13 +163,13 @@ Why is this blur performed so early? Such process is usually done in the end dur
 
 All the transparent objects (glasses, particles) are rendered on top of the scene:
 
-![DOOM%202016%20Graphics%20Study%20Adrian%20Courr%20ges/34_transparency_post.jpg](DOOM%202016%20Graphics%20Study%20Adrian%20Courr%20ges/34_transparency_post.jpg)
+![images/34_transparency_post.jpg](images/34_transparency_post.jpg)
 
 Glasses render very nicely in DOOM especially frosted or dirty glasses: decals are used to affect just some part of the glass to make its refraction more or less blurry. The pixel shader computes the refraction “blurriness” factor and selects from the blur chain the 2 maps closest to this blurriness factor. It reads from these 2 maps and then linearly interpolates between the 2 values to approximate the final blurry color the refraction is supposed to have. This is thanks to this process that glasses can produce nice refraction at different levels of blur on a per-pixel-basis.
 
 ### Distortion Map
 
-![DOOM%202016%20Graphics%20Study%20Adrian%20Courr%20ges/35_distortion.png](DOOM%202016%20Graphics%20Study%20Adrian%20Courr%20ges/35_distortion.png)
+![images/35_distortion.png](images/35_distortion.png)
 
 Very hot areas can create heat distortion in the image. Here the *Gore Nest* slightly distorts the image.
 
@@ -179,7 +179,7 @@ The real effect is applied later as a post-process using the distortion map to k
 
 ### User Interface
 
-![DOOM%202016%20Graphics%20Study%20Adrian%20Courr%20ges/36_ui.png](DOOM%202016%20Graphics%20Study%20Adrian%20Courr%20ges/36_ui.png)
+![images/36_ui.png](images/36_ui.png)
 
 The UI is rendered to a different render-target, in premultiplied alpha mode stored in LDR format.
 
@@ -191,7 +191,7 @@ The rendering doesn’t use any batching technique in particular, it draws UI it
 
 [TAA](https://en.wikipedia.org/wiki/Temporal_anti-aliasing) and [motion blur](https://en.wikipedia.org/wiki/Motion_blur) are applied using the velocity map and the rendering results of the previous frames. Fragments can be retroprojected so the pixel shader knows where the pixel currently being processed was located in the previous frame. The rendering actually slightly shifts meshes projection by half a pixel every other frame: this helps remove the sub-pixel aliasing artifacts.
 
-![DOOM%202016%20Graphics%20Study%20Adrian%20Courr%20ges/40_taa_mb.jpg](DOOM%202016%20Graphics%20Study%20Adrian%20Courr%20ges/40_taa_mb.jpg)
+![images/40_taa_mb.jpg](images/40_taa_mb.jpg)
 
 The result is very nice: not only the mesh edges become smooth, but the specular aliasing (where one bright pixel would pop-in alone for a frame) is also taken care of. The quality is far better than what could be achieved through a post-process method like FXAA.
 
@@ -203,7 +203,7 @@ The HDR lighting buffer is downscaled to half its resolution in a loop until it 
 
 ### Bloom
 
-![DOOM%202016%20Graphics%20Study%20Adrian%20Courr%20ges/45_bloom.jpg](DOOM%202016%20Graphics%20Study%20Adrian%20Courr%20ges/45_bloom.jpg)
+![images/45_bloom.jpg](images/45_bloom.jpg)
 
 A bright-pass filter is applied to dim-down the darkest areas of the scene.
 
@@ -222,7 +222,7 @@ All this step is performed in a single pixel shader:
 - effects like vignetting, dirt / lens flares are performed
 - the average luminance is retrieved by sampling the center of the 2x2 luminance map and with additional exposure parameters, the tonemapping and color grading are applied.
 
-![DOOM%202016%20Graphics%20Study%20Adrian%20Courr%20ges/50_tonemap_post.jpg](DOOM%202016%20Graphics%20Study%20Adrian%20Courr%20ges/50_tonemap_post.jpg)
+![images/50_tonemap_post.jpg](images/50_tonemap_post.jpg)
 
 The tonemapping takes the HDR lighting buffer containing colors varying inside a wide range of luminosity and converts it down to 8 bits per component (LDR) so the frame can be displayed on a monitor. A [filmic tonemapping operator](http://duikerresearch.com/2015/09/filmic-tonemapping-ea-2006/) based on the `(x(Ax+BC)+DE) / (x(Ax+B)+DF) - (E/F)` equation is used, it’s the [Uncharted 2 tonemapper](http://filmicgames.com/archives/75), also present in [GTA V](http://www.adriancourreges.com/blog/2015/11/02/gta-v-graphics-study/).
 
@@ -232,7 +232,7 @@ Note that all the general red tint of the scene comes from color correction.
 
 Finally the UI is blended on the top of the game frame and at the same time a subtle [film-grain](https://en.wikipedia.org/wiki/Film_grain) is applied.
 
-![DOOM%202016%20Graphics%20Study%20Adrian%20Courr%20ges/51_grain_post.jpg](DOOM%202016%20Graphics%20Study%20Adrian%20Courr%20ges/51_grain_post.jpg)
+![images/51_grain_post.jpg](images/51_grain_post.jpg)
 
 Phew! We’re done with the frame it can now be sent to the monitor for display, that was quite a lot of computation but all of this happened in less than 16ms. DOOM manages to produce great quality visual at high performance because it cleverly re-uses old data computed in the previous frames. In total there were 1331 draw calls, 132 textures and 50 render targets used.
 
@@ -243,13 +243,13 @@ The glass rendering is really nice and it’s achieved with relatively simple st
 - prepare several levels of blur of the opaque meshes rendering
 - draw translucent items back-to-front in forward mode applying decals / lighting / probe reflection, using the previous chain for different glass refraction blur values, so each pixel can have its own refraction value.
 
-![DOOM%202016%20Graphics%20Study%20Adrian%20Courr%20ges/70_glass_after.jpg](DOOM%202016%20Graphics%20Study%20Adrian%20Courr%20ges/70_glass_after.jpg)
+![images/70_glass_after.jpg](images/70_glass_after.jpg)
 
 ### Depth of Field
 
 The frame studied in the breakdown didn’t really show any [depth of field](https://en.wikipedia.org/wiki/Depth_of_field) so let’s consider the following scene before and after the DoF is applied:
 
-![DOOM%202016%20Graphics%20Study%20Adrian%20Courr%20ges/80_dof_post.jpg](DOOM%202016%20Graphics%20Study%20Adrian%20Courr%20ges/80_dof_post.jpg)
+![images/80_dof_post.jpg](images/80_dof_post.jpg)
 
 Not all games perform DoF correctly: the naive approach is often to use a Gaussian blur and do all the blurring in one pass depending on the pixel’s depth. This approach is simple and cheap but has several issues:
 
@@ -263,7 +263,7 @@ Far-field and near-field images are created: pixel selection is done depending o
 - Near-field can be strongly blurred, the more it’ll bleed into pixels behind it the better.
 - Far-field is also blurred but doesn’t read any pixel from the in-focus / near-field area, so it avoids any problems with foreground objects wrongly bleeding into the background.
 
-![DOOM%202016%20Graphics%20Study%20Adrian%20Courr%20ges/81_dof_far.jpg](DOOM%202016%20Graphics%20Study%20Adrian%20Courr%20ges/81_dof_far.jpg)
+![images/81_dof_far.jpg](images/81_dof_far.jpg)
 
 To create the bokeh blurs, DOOM works at half-resolution and performs a disk-blur with 64 texture taps, each sample having the same weight so the brightness really spreads around unlike a Gaussian blur. The disk diameter can vary on a per-pixel basis depending on the pixel’s [CoC](https://en.wikipedia.org/wiki/Circle_of_confusion) value.
 
