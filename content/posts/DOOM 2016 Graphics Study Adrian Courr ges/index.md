@@ -20,6 +20,7 @@ We’ll examine the scene below where the player attacks a *[Gore Nest](http://d
 
 ![images/99_final.jpg](images/99_final.jpg)
 
+![../common/hero_images/hero_001.jpg](../common/hero_images/hero_001.jpg)
 Unlike most Windows games released these days, DOOM doesn’t use [Direct3D](https://en.wikipedia.org/wiki/Direct3D) but offers an [OpenGL](https://en.wikipedia.org/wiki/OpenGL) and [Vulkan](https://en.wikipedia.org/wiki/Vulkan_(API)) backend. Vulkan being the new hot thing and [Baldur Karlsson](https://twitter.com/baldurk) having recently added support for it in [RenderDoc](https://github.com/baldurk/renderdoc), it was hard resisting picking into DOOM internals. The following observations are based on the game running with Vulkan on a [GTX 980](https://en.wikipedia.org/wiki/GeForce_900_series) with all the settings on *Ultra*, some are guesses others are taken from the [Siggraph presentation by Tiago Sousa and Jean Geffroy](http://advances.realtimerendering.com/s2016/Siggraph2016_idTech6.pdf).
 
 ### Mega-Texture Update
