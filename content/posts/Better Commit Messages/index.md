@@ -1,5 +1,4 @@
-# images
-
+---
 Tags: git, kv47.in
 URL: https://dev.to/kodaman2/better-commit-messages-3dnm
 author: Kailash Vetal
@@ -9,7 +8,7 @@ excerpt: Better Commit Messages
 hero: https://images.unsplash.com/photo-1501504905252-473c47e087f8
 title: Better Commit Messages - DEV Community 
 updated: Feb 28, 2020 2:46 PM
-
+---
 ## Better Commit Messages
 
 Going through my TL saw the below tweet, I felt attacked a bit. As a one man army on most of my projects, I always do typical one liners, init, update, readme, fix-01, and so on. In this article I will show you how to configure git to launch your template on vscode for better commit messages.
