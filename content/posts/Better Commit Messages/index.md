@@ -5,7 +5,7 @@ author: Kailash Vetal
 created: Feb 28, 2020 2:30 PM
 date: 2019-04-31
 excerpt: Better Commit Messages
-hero: https://images.unsplash.com/photo-1501504905252-473c47e087f8
+hero: ../common/hero_images/hero_001.jpg
 title: Better Commit Messages - DEV Community 
 updated: Feb 28, 2020 2:46 PM
 ---
