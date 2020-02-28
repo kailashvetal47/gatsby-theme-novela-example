@@ -1,15 +1,14 @@
-# DOOM (2016) - Graphics Study - Adrian Courrèges
-
+---
+title: DOOM (2016) - Graphics Study - Adrian Courrèges
+author: Kailash Vetal
+date: 2019-04-31
+hero: ./images/doom_2016_logo.jpg
+excerpt: DOOM (2016) - Graphics Study - Adrian Courrèges
 Tags: kv47.in
 URL: http://www.adriancourreges.com/blog/2016/09/09/doom-2016-graphics-study/
-author: Kailash Vetal
 created: Jan 28, 2020 4:39 PM
-date: 2020/02/28
-excerpt: DOOM (2016) - Graphics Study - Adrian Courrèges
-title: DOOM (2016) - Graphics Study - Adrian Courrèges
 updated: Feb 28, 2020 1:51 PM
-
-![DOOM%202016%20Graphics%20Study%20Adrian%20Courr%20ges/doom_2016_logo.jpg](DOOM%202016%20Graphics%20Study%20Adrian%20Courr%20ges/doom_2016_logo.jpg)
+---
 
 [DOOM](https://en.wikipedia.org/wiki/Doom_(1993_video_game)) pioneered fundamental changes in game design and mechanics back in 1993, it was a world-wide phenomenon which propelled to fame iconic figures like [John Carmack](https://en.wikipedia.org/wiki/John_Carmack) and [John Romero](https://en.wikipedia.org/wiki/John_Romero)…
 
