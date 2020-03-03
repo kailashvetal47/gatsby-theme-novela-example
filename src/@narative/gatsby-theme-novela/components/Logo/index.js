@@ -8,7 +8,7 @@ import React from 'react';
 export default function Logo({ fill }) {
   return (
   <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
- width="720.000000pt" height="720.000000pt" viewBox="0 0 106.000000 25.000000"
+ width="25.000000pt" height="25.000000pt" viewBox="0 0 25.000000 25.000000"
  height="30px">
 <metadata>
 Created by potrace 1.15, written by Peter Selinger 2001-2017
