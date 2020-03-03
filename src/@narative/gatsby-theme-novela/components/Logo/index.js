@@ -5,16 +5,16 @@ import React from 'react';
  * Make sure you have a height set for your logo.
  * It is recommended to keep the height within 25-35px.
  */
-export default function Logo() {
+export default function Logo({ fill }) {
   return (
   <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
- width="120.000000pt" height="120.000000pt" viewBox="0 0 120.000000 120.000000"
- preserveAspectRatio="xMidYMid meet">
+ width="720.000000pt" height="720.000000pt" viewBox="0 0 106.000000 25.000000"
+ height="30px">
 <metadata>
 Created by potrace 1.15, written by Peter Selinger 2001-2017
 </metadata>
 <g transform="translate(0.000000,720.000000) scale(0.100000,-0.100000)"
-fill="#000000" stroke="none">
+fill={fill} stroke="none">
 <path d="M3320 7194 c-19 -2 -78 -9 -130 -15 -1282 -143 -2396 -974 -2905
 -2165 -125 -292 -212 -614 -261 -959 -21 -151 -30 -585 -15 -756 137 -1629
 1360 -2966 2971 -3248 240 -42 299 -46 630 -46 367 0 482 11 780 76 924 201
