@@ -8,4 +8,28 @@
     - url: https://github.com
     - url: https://github.com
     - url: https://github.com
+  featured: false
+
+- name: Unity
+  bio: |
+    Unity
+  avatar: ./avatars/kv_hero_img_400_400.jpg
+  social:
+    - url: https://unsplash.com
+    - url: https://stackoverflow.com
+    - url: https://github.com
+    - url: https://github.com
+    - url: https://github.com
   featured: true
+
+- name: Software Development
+  bio: |
+    Software Development
+  avatar: ./avatars/kv_hero_img_400_400.jpg
+  social:
+    - url: https://unsplash.com
+    - url: https://stackoverflow.com
+    - url: https://github.com
+    - url: https://github.com
+    - url: https://github.com
+  featured: false
