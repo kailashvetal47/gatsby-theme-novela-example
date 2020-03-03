@@ -1,11 +1,11 @@
 module.exports = {
   siteMetadata: {
-    title: `Novela by Narative`,
-    name: `Narative`,
-    siteUrl: `https://novela.narative.co`,
-    description: `This is my description that will be used in the meta tags and important for search results`,
+    title: `Technical Booklet from kv47`,
+    name: `Booklet`,
+    siteUrl: `https://blog.kv47.in/`,
+    description: `Technical articles and blog posts from kv47.in`,
     hero: {
-      heading: `Hello World, Its me KV`,
+      heading: `Booklet`,
       maxWidth: 652,
     },
     social: [
@@ -68,7 +68,7 @@ module.exports = {
           format: 'dddd D MMMM YYYY', // string, defaults to "MM/DD/YYYY" - pass in any acceptable date-and-time format
           utc: false, // boolean, defaults to false - output time as UTC or not, following date-and-time API
         },
-        locale: 'fr', // string, defaults to null, which date-and-time defaults as "en" - whether to localize the date or not, can use any available date-and-time localization
+        locale: 'en', // string, defaults to null, which date-and-time defaults as "en" - whether to localize the date or not, can use any available date-and-time localization
       },
     },
   ],
