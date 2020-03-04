@@ -1,12 +1,12 @@
 module.exports = {
   siteMetadata: {
-    title: `Technical Booklet from kv47`,
+    title: `Booklet`,
     name: `Booklet`,
     siteUrl: `https://blog.kv47.in/`,
     description: `Technical articles and blog posts from kv47.in`,
     hero: {
-      heading: `Booklet`,
-      maxWidth: 652,
+      heading: `Hello World, Welcome to the booklet. Whats here ? Articles, Video links and all interesting information I gathered from internet.`,
+      maxWidth: 1200,
     },
     social: [
       {
@@ -39,7 +39,9 @@ module.exports = {
         contentAuthors: "content/authors",
         basePath: "/",
         authorsPage: true,
+        authorsPath: "/about-me",
         mailchimp: false,
+        articlePermalinkFormat: ":year/:month/:day/:slug"
       },
     },
     {
