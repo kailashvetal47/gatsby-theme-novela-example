@@ -1,14 +1,13 @@
-# SOLID Principles For Game Developers
-
+---
 Tags: kailashvetal.co.in, kv47.in, software development
 URL: http://34.82.122.52/solid-principles-for-game-developers/
 author: Kailash Vetal
 created: Mar 04, 2020 1:22 PM
 date: 2020-02-20
-hero: ../hero.jpg
+hero: ./hero.jpg
 title: SOLID Principles For Game Developers
 updated: Mar 04, 2020 1:26 PM
-
+---
 The SOLID principles are a set of 5 software development principles coined by “Uncle Bob” (Robert C. Martin). They are a set of guidelines for Object Oriented Design (OOD), specifically for class design. They are widely used by agile business programmers however they are generally unknown amongst game developers. This article describes the principles and frames them in common game development situations.
 
 **Single Responsibility Principle**
@@ -17,7 +16,7 @@ The SOLID principles are a set of 5 software development principles coined by �
 
 [Single Responsibility Principle](http://www.doolwind.com/images/blog/solid/SingleResponsibilityPrinciple.jpg)
 
-![SOLID Principles For Game Developers/SingleResponsibilityPrinciple.jpg] (SOLID Principles For Game Developers/SingleResponsibilityPrinciple.jpg)
+![SOLID%20Principles%20For%20Game%20Developers/SingleResponsibilityPrinciple.jpg](SOLID%20Principles%20For%20Game%20Developers/SingleResponsibilityPrinciple.jpg)
 
 The first principle is the cornerstone of the set and gives the greatest return on investment when followed correctly. It states that each class should have only a single responsibility and therefore reason to change. Keeping each class small and tightly focussed allows developers to know exactly where to go to find or add particular functionality to the game.
 
@@ -33,7 +32,7 @@ When have you got it? – The usual culprit breaking this principle is that one 
 
 [Open Closed Principle](http://www.doolwind.com/images/blog/solid/OpenClosedPrinciple.jpg)
 
-![SOLID Principles For Game Developers/OpenClosedPrinciple.jpg](SOLID Principles For Game Developers/OpenClosedPrinciple.jpg)
+![SOLID%20Principles%20For%20Game%20Developers/OpenClosedPrinciple.jpg](SOLID%20Principles%20For%20Game%20Developers/OpenClosedPrinciple.jpg)
 
 The goal of this principle is for each class to change as infrequently as possible while allowing it to be used in as many situations as possible. While these two requirements may seem at odds they actually complement each other to generate robust design. A class is open for extension means that the behaviour of a class can be changed in new and different ways as the requirements change. A class is closed for modification when no source code changes are required for these changes in requirements to be met.
 
@@ -47,7 +46,7 @@ When have you got it? – This is the file you dread checking-in because everyon
 
 [Liskov Substitution Principle](http://www.doolwind.com/images/blog/solid/LiskovSubtitutionPrinciple.jpg)
 
-![SOLID Principles For Game Developers/LiskovSubtitutionPrinciple.jpg](SOLID Principles For Game Developers/LiskovSubtitutionPrinciple.jpg)
+![SOLID%20Principles%20For%20Game%20Developers/LiskovSubtitutionPrinciple.jpg](SOLID%20Principles%20For%20Game%20Developers/LiskovSubtitutionPrinciple.jpg)
 
 Inheritance and polymorphism are powerful mechanisms for solving complex problems with simple solutions. They are also powerful mechanisms for creating bugs and problematic code. This principle involves making sure inheritance hierarchies are sound and not being abused by code that introduces bugs that are hard to find. While it seems simple on the surface, this principle can be quite complex to solve correctly.
 
@@ -61,7 +60,7 @@ When have you got it? – Classes breaking this rule are really easy to find. Lo
 
 [Interface Segregation Principle](http://www.doolwind.com/images/blog/solid/InterfaceSegregationPrinciple.jpg)
 
-![SOLID Principles For Game Developers/InterfaceSegregationPrinciple.jpg](SOLID Principles For Game Developers/InterfaceSegregationPrinciple.jpg)
+![SOLID%20Principles%20For%20Game%20Developers/InterfaceSegregationPrinciple.jpg](SOLID%20Principles%20For%20Game%20Developers/InterfaceSegregationPrinciple.jpg)
 
 Interfaces should be used for communication between different objects to encourage clean, modular code. This principle takes that concept further by making sure that the interfaces we use are themselves clean and unified. The larger the interface, the more the client is relying on functionality of another object. By keeping small segregated interfaces each object will rely upon only the smallest set of functionality it actually requires. This reduces the complexity of links between objects and more importantly, lets someone reading your code know exactly what each class relies upon. Rather than one “fat” interface we break the interface up into multiple smaller groups of functionality that each serve a different client.
 
@@ -77,7 +76,7 @@ When have you got it? – Look at all your interfaces (abstract classes) and mak
 
 [Dependency Inversion Principle](http://www.doolwind.com/images/blog/solid/DependencyInversionPrinciple.jpg)
 
-![SOLID Principles For Game Developers/DependencyInversionPrinciple.jpg](SOLID Principles For Game Developers/DependencyInversionPrinciple.jpg)
+![SOLID%20Principles%20For%20Game%20Developers/DependencyInversionPrinciple.jpg](SOLID%20Principles%20For%20Game%20Developers/DependencyInversionPrinciple.jpg)
 
 This is a key point that I had not heard of at all in game development until recently. This principle is quite the opposite of how many developers are used to working. Usually, if a class depends on another class, the client will instantiate an object of that class and then act upon it. Dependency Inversion (also called Inversion of Control) turns this on its head. Instead of the client being responsible for creating the object, it is given the object it depends on. This takes the control away from the client and moves it to the owner of the client, often the game engine.
 
