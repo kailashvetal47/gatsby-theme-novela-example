@@ -41,7 +41,7 @@ module.exports = {
         authorsPage: true,
         authorsPath: "/about-me",
         mailchimp: false,
-        articlePermalinkFormat: ":year/:month/:day/:slug"
+        articlePermalinkFormat: ":slug"
       },
     },
     {
