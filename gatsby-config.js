@@ -5,30 +5,27 @@ module.exports = {
     siteUrl: `https://blog.kv47.in/`,
     description: `Technical articles and blog posts from kv47.in`,
     hero: {
-      heading: `Hello World, Welcome to the booklet. Whats here ? Articles, Video links and all interesting information I gathered from internet.`,
+      heading: `Hello World, Welcome to the booklet. Whats here? articles, video links and all interesting information I gathered from internet.`,
       maxWidth: 1200,
     },
     social: [
       {
         name: `twitter`,
-        url: `https://twitter.com/narative`,
+        url: `https://twitter.com/Kailash_Vetal`,
       },
       {
         name: `github`,
-        url: `https://github.com/narative`,
+        url: `https://github.com/kailashvetal47`,
       },
       {
         name: `instagram`,
-        url: `https://instagram.com/narative.co`,
+        url: `https://www.instagram.com/vitalk47`,
       },
       {
         name: `linkedin`,
-        url: `https://www.linkedin.com/company/narative/`,
+        url: `www.linkedin.com/in/kv47`,
       },
-      {
-        name: `dribbble`,
-        url: `https://dribbble.com/narativestudio`,
-      },
+      
     ],
   },
   plugins: [

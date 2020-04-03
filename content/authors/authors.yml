@@ -3,9 +3,5 @@
     Geek | Gamer | Gagger.
   avatar: ./avatars/kv_hero_img_400_400.jpg
   social:
-    - url: https://unsplash.com
-    - url: https://stackoverflow.com
-    - url: https://github.com
-    - url: https://github.com
-    - url: https://github.com
+    - url: https://github.com/kailashvetal47
   featured: true
