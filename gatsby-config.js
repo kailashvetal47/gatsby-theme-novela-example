@@ -36,7 +36,7 @@ module.exports = {
         contentAuthors: "content/authors",
         basePath: "/",
         authorsPage: true,
-        authorsPath: "/about-me",
+        authorsPath: "about-me",
         mailchimp: false,
         articlePermalinkFormat: ":year/:month/:day/:slug"
       },
